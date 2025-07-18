@@ -226,7 +226,6 @@ function ControlInventario() {
                                         <button onClick={() => handleEditClick(product)} className="edit-button">
                                             Editar
                                         </button>
-                                        <br /><br />
                                         <button onClick={() => handleDeleteProduct(product.id_prod)} className="delete-button">
                                             Eliminar
                                         </button>

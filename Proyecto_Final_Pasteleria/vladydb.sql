@@ -84,6 +84,7 @@ CREATE TABLE `usuario` (
   `telefono` VARCHAR(20) DEFAULT NULL,
   `correo` VARCHAR(100) NOT NULL UNIQUE,
   `contra` VARCHAR(255) NOT NULL, -- Para almacenar hashes de bcrypt
+  `rol` VARCHAR(50) NOT NULL DEFAULT 'cliente', -- ¡Esta es la línea clave!
   PRIMARY KEY (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

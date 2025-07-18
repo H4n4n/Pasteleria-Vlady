@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { jsPDF } from 'jspdf';
-import './ReportesVenta.css';
+import './ReportesVenta.css'; // Asegúrate de que este archivo CSS exista y esté configurado
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -16,11 +16,10 @@ function ReportesVenta() {
         ventasYape: 0,
         ventasPlin: 0,
         promedioVentas: 0,
-        // Nuevos indicadores
-        ingresoDiario: 0, // Ingreso del día actual
-        ingresoSemanal: 0, // Ingreso de los últimos 7 días
-        ventaPromedioSemanal: 0, // Promedio diario de ventas en la última semana
-        stockTotal: 0, // Stock total de todos los productos activos
+        ingresoDiario: 0,
+        ingresoSemanal: 0,
+        ventaPromedioSemanal: 0,
+        stockTotal: 0,
     });
     const [historialVentas, setHistorialVentas] = useState([]);
     const [productosEliminados, setProductosEliminados] = useState([]);
@@ -45,8 +44,10 @@ function ReportesVenta() {
     const processChartData = useCallback((ventas) => {
         const salesByDate = {};
         ventas.forEach(venta => {
+            // Asegúrate de que venta.fecha sea una cadena de fecha válida
             const date = new Date(venta.fecha).toISOString().split('T')[0];
-            salesByDate[date] = (salesByDate[date] || 0) + parseFloat(venta.total);
+            // CORRECCIÓN: Asegurar que venta.total sea un número antes de sumar
+            salesByDate[date] = (salesByDate[date] || 0) + parseFloat(venta.total || 0);
         });
         const sortedDates = Object.keys(salesByDate).sort();
         const labels = sortedDates;
@@ -82,6 +83,7 @@ function ReportesVenta() {
         const urlSuffix = queryString ? `?${queryString}` : '';
 
         try {
+            // VERIFICA ESTAS URLS CON LAS DE TU SERVER.JS
             const totalesResponse = await fetch(`http://localhost:3000/api/reportes-totales${urlSuffix}`);
             if (!totalesResponse.ok) {
                 const errorText = await totalesResponse.text();
@@ -96,7 +98,6 @@ function ReportesVenta() {
                     ventasYape: totalesData.data.ventasYape || 0,
                     ventasPlin: totalesData.data.ventasPlin || 0,
                     promedioVentas: totalesData.data.promedioVentas || 0,
-                    // Actualizar con nuevos indicadores
                     ingresoDiario: totalesData.data.ingresoDiario || 0,
                     ingresoSemanal: totalesData.data.ingresoSemanal || 0,
                     ventaPromedioSemanal: totalesData.data.ventaPromedioSemanal || 0,
@@ -106,6 +107,7 @@ function ReportesVenta() {
                 setError(totalesData.message);
             }
 
+            // VERIFICA ESTAS URLS CON LAS DE TU SERVER.JS
             const historialResponse = await fetch(`http://localhost:3000/api/historial-pedidos${urlSuffix}`);
             if (!historialResponse.ok) {
                 const errorText = await historialResponse.text();
@@ -152,6 +154,9 @@ function ReportesVenta() {
 
     useEffect(() => {
         fetchReportes();
+        // El setInterval se mantiene para actualizaciones periódicas.
+        // Si necesitas una actualización inmediata al registrar una venta,
+        // tendrías que usar Context API o una prop para disparar fetchReportes.
         const intervalId = setInterval(fetchReportes, 30000);
         return () => clearInterval(intervalId);
     }, [fetchReportes]);
@@ -224,9 +229,9 @@ function ReportesVenta() {
                     doc.setFontSize(textFontSize);
                 }
                 doc.text(prod.nombre_producto, colX[0], y);
-                doc.text(String(prod.cantidad), colX[1], y);
-                doc.text(`S/ ${parseFloat(prod.precio_unidad).toFixed(2)}`, colX[2], y);
-                doc.text(`S/ ${parseFloat(prod.subTotal).toFixed(2)}`, colX[3], y);
+                doc.text(String(prod.cantidad || 0), colX[1], y); // CORRECCIÓN: asegurar número
+                doc.text(`S/ ${parseFloat(prod.precio_unidad || 0).toFixed(2)}`, colX[2], y); // CORRECCIÓN: asegurar número
+                doc.text(`S/ ${parseFloat(prod.subTotal || 0).toFixed(2)}`, colX[3], y); // CORRECCIÓN: asegurar número
                 y += lineHeight;
             });
         } else {
@@ -240,7 +245,7 @@ function ReportesVenta() {
 
         // Total
         doc.setFontSize(headerFontSize);
-        doc.text(`TOTAL: S/ ${parseFloat(ventaData.total).toFixed(2)}`, doc.internal.pageSize.width - margin, y, { align: "right" });
+        doc.text(`TOTAL: S/ ${parseFloat(ventaData.total || 0).toFixed(2)}`, doc.internal.pageSize.width - margin, y, { align: "right" }); // CORRECCIÓN: asegurar número
         y += lineHeight * 2;
 
         // Mensaje de agradecimiento
@@ -290,6 +295,8 @@ function ReportesVenta() {
         setFilterFechaInicio('');
         setFilterFechaFin('');
         setFilterDniCliente('');
+        // Importante: Llamar a fetchReportes para recargar los datos sin filtros
+        fetchReportes();
     };
 
     if (loading) {
@@ -304,43 +311,7 @@ function ReportesVenta() {
         <div className="reportes-page-content">
             <h2>Reportes de Venta</h2>
 
-            <div className="filters-section">
-                <h3>Filtros de Búsqueda</h3>
-                <div className="filter-group">
-                    <label htmlFor="fechaInicio">Fecha Inicio:</label>
-                    <input
-                        type="date"
-                        id="fechaInicio"
-                        value={filterFechaInicio}
-                        onChange={(e) => setFilterFechaInicio(e.target.value)}
-                    />
-                </div>
-                <div className="filter-group">
-                    <label htmlFor="fechaFin">Fecha Fin:</label>
-                    <input
-                        type="date"
-                        id="fechaFin"
-                        value={filterFechaFin}
-                        onChange={(e) => setFilterFechaFin(e.target.value)}
-                    />
-                </div>
-                <div className="filter-group">
-                    <label htmlFor="dniCliente">DNI Cliente:</label>
-                    <input
-                        type="text"
-                        id="dniCliente"
-                        value={filterDniCliente}
-                        onChange={(e) => setFilterDniCliente(e.target.value)}
-                        placeholder="DNI del cliente"
-                        maxLength="8"
-                    />
-                </div>
-                <div className="filter-buttons">
-                    <button onClick={fetchReportes} className="apply-filter-button">Aplicar Filtros</button>
-                    <button onClick={handleClearFilters} className="clear-filter-button">Limpiar Filtros</button>
-                </div>
-            </div>
-
+            {/* Sección de Cuadros de Reportes Principales */}
             <div className="reportes-cards-container">
                 <div className="report-card green">
                     <h3>Total Ventas</h3>
@@ -386,17 +357,12 @@ function ReportesVenta() {
                     </div>
                     <div className="report-card light-gray">
                         <h3>Stock Total Productos</h3>
-                        <p>{reportes.stockTotal} unidades</p>
+                        <p>{reportes.stockTotal || 0} unidades</p> {/* CORRECCIÓN: asegurar número */}
                     </div>
-                    {/* Si tuvieras un indicador de Tiempo de Atención Promedio, iría aquí */}
-                    {/* <div className="report-card light-orange">
-                        <h3>Tiempo Atención Promedio</h3>
-                        <p>00:00:00</p>
-                    </div> */}
                 </div>
             </div>
 
-
+            {/* Gráfico de Barras - Permanece aquí */}
             <div className="chart-section">
                 <h3>Ventas Diarias</h3>
                 {historialVentas.length > 0 ? (
@@ -408,6 +374,46 @@ function ReportesVenta() {
                 )}
             </div>
 
+            {/* Sección de Filtros de Búsqueda - MOVida aquí, debajo del gráfico */}
+            <div className="filters-section">
+                <h3>Filtros de Búsqueda</h3>
+                <div className="filter-group">
+                    <label htmlFor="fechaInicio">Fecha Inicio:</label>
+                    <input
+                        type="date"
+                        id="fechaInicio"
+                        value={filterFechaInicio}
+                        onChange={(e) => setFilterFechaInicio(e.target.value)}
+                    />
+                </div>
+                <div className="filter-group">
+                    <label htmlFor="fechaFin">Fecha Fin:</label>
+                    <input
+                        type="date"
+                        id="fechaFin"
+                        value={filterFechaFin}
+                        onChange={(e) => setFilterFechaFin(e.target.value)}
+                    />
+                </div>
+                <div className="filter-group">
+                    <label htmlFor="dniCliente">DNI Cliente:</label>
+                    <input
+                        type="text"
+                        id="dniCliente"
+                        value={filterDniCliente}
+                        onChange={(e) => setFilterDniCliente(e.target.value)}
+                        placeholder="DNI del cliente"
+                        maxLength="8"
+                    />
+                </div>
+                <div className="filter-buttons">
+                    <button onClick={fetchReportes} className="apply-filter-button">Aplicar Filtros</button>
+                    <button onClick={handleClearFilters} className="clear-filter-button">Limpiar Filtros</button>
+                </div>
+            </div>
+
+
+            {/* Historial de Ventas - Permanece al final */}
             <div className="historial-ventas-section">
                 <h3>Historial de Ventas</h3>
                 {historialVentas.length > 0 ? (
@@ -429,11 +435,11 @@ function ReportesVenta() {
                                 <tr key={venta.id_venta}>
                                     <td>{venta.id_venta}</td>
                                     <td>{new Date(venta.fecha).toLocaleDateString()}</td>
-                                    <td>{venta.dni_cliente}</td>
-                                    <td>{venta.nombre_cliente}</td>
-                                    <td>{venta.metodo_pago}</td>
-                                    <td>S/ {parseFloat(venta.total).toFixed(2)}</td>
-                                    <td>{venta.nombre_usuario_venta}</td>
+                                    <td>{venta.dni_cliente || 'N/A'}</td> {/* CORRECCIÓN: asegurar valor */}
+                                    <td>{venta.nombre_cliente || 'Consumidor Final'}</td> {/* CORRECCIÓN: asegurar valor */}
+                                    <td>{venta.metodo_pago || 'N/A'}</td> {/* CORRECCIÓN: asegurar valor */}
+                                    <td>S/ {parseFloat(venta.total || 0).toFixed(2)}</td> {/* CORRECCIÓN: Asegurar que total sea un número */}
+                                    <td>{venta.nombre_usuario_venta || 'N/A'}</td> {/* CORRECCIÓN: asegurar valor */}
                                     <td>
                                         <button
                                             onClick={() => generateReceiptPDF(venta)}
@@ -452,6 +458,7 @@ function ReportesVenta() {
                 )}
             </div>
 
+            {/* Sección de Productos Eliminados - Permanece al final */}
             <div className="deleted-records-section">
                 <button
                     className="toggle-deleted-button"
@@ -483,11 +490,11 @@ function ReportesVenta() {
                                             <td>{prod.id_log}</td>
                                             <td>{prod.id_prod_original}</td>
                                             <td>{prod.nombre_producto}</td>
-                                            <td>S/ {parseFloat(prod.precio_original).toFixed(2)}</td>
-                                            <td>{prod.stock_actual_original}</td>
-                                            <td>{prod.nombre_usuario_elimino}</td>
+                                            <td>S/ {parseFloat(prod.precio_original || 0).toFixed(2)}</td> {/* CORRECCIÓN: asegurar número */}
+                                            <td>{prod.stock_actual_original || 0}</td> {/* CORRECCIÓN: asegurar número */}
+                                            <td>{prod.nombre_usuario_elimino || 'N/A'}</td> {/* CORRECCIÓN: asegurar valor */}
                                             <td>{new Date(prod.fecha_eliminacion).toLocaleString()}</td>
-                                            <td>{prod.razon_eliminacion}</td>
+                                            <td>{prod.razon_eliminacion || 'N/A'}</td> {/* CORRECCIÓN: asegurar valor */}
                                         </tr>
                                     ))}
                                 </tbody>

@@ -1,74 +1,162 @@
-h2 {
-    color: #5d4037; 
-    margin-bottom: 25px;
-    text-align: center;
-    font-size: 2em;
+.historial-pedidos-section {
+    padding: 30px;
+    max-width: 1200px; /* Ajusta el ancho según tu diseño */
+    margin: 20px auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.table-container {
-    overflow-x: auto;
+.historial-pedidos-section h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2em;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+/* Estilos para el contenedor de filtros */
+.filtros-busqueda-container {
+    background-color: #f8f8f8;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px; /* Espacio entre filtros y tabla */
+}
+
+.filtros-busqueda-container h3 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.filtros-form {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: 20px; /* Espacio entre los grupos de formulario */
+    justify-content: center; /* Centrar los elementos del formulario */
+    align-items: flex-end; /* Alinea los inputs y labels al final */
+}
+
+.form-group-filter {
+    flex: 1; /* Permite que cada grupo de filtro ocupe el espacio disponible */
+    min-width: 250px; /* Ancho mínimo para cada input */
+}
+
+.form-group-filter label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #666;
+}
+
+.form-group-filter input[type="text"] {
     width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 20px; /* Margen superior si los botones se van a una nueva línea */
+    width: 100%; /* Ocupar todo el ancho para centrar */
+    justify-content: center;
+}
+
+.btn-aplicar,
+.btn-limpiar {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-aplicar {
+    background-color: #28a745; /* Verde */
+    color: white;
+}
+
+.btn-aplicar:hover {
+    background-color: #218838;
+}
+
+.btn-limpiar {
+    background-color: #dc3545; /* Rojo */
+    color: white;
+}
+
+.btn-limpiar:hover {
+    background-color: #c82333;
+}
+
+
+/* Estilos para la tabla (si no los tienes ya en HistorialVentasSection.css) */
+.table-container {
+    overflow-x: auto; /* Para tablas responsivas */
 }
 
 .pedidos-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    font-size: 0.95em;
-    min-width: 600px; 
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .pedidos-table th,
 .pedidos-table td {
-    border: 1px solid #ddd;
+    border: 1px solid #e0e0e0;
     padding: 12px 15px;
     text-align: left;
+    vertical-align: middle;
 }
 
 .pedidos-table th {
-    background-color: #f2f2f2;
-    color: #5d4037; 
+    background-color: #eef7ff;
     font-weight: bold;
+    color: #333;
     text-transform: uppercase;
+    font-size: 0.9em;
 }
 
 .pedidos-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9; 
+    background-color: #f9f9f9;
 }
 
 .pedidos-table tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f0f8ff;
+}
+
+/* Mensajes de estado */
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .no-data-message {
     text-align: center;
-    color: #777;
-    font-size: 1.1em;
     padding: 20px;
+    color: #666;
+    font-style: italic;
+    margin-top: 20px;
     border: 1px dashed #ccc;
     border-radius: 8px;
-    margin-top: 30px;
-    background-color: #fefefe;
-}
-
-.error-message {
-    color: #d8000c;
-    background-color: #ffbaba;
-    border: 1px solid #d8000c;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-
-@media (max-width: 768px) {
-    .pedidos-table {
-        font-size: 0.85em; 
-    }
-    .pedidos-table th,
-    .pedidos-table td {
-        padding: 8px 10px; 
-    }
+    background-color: #f0f0f0;
 }
