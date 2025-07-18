@@ -1,0 +1,120 @@
+.reportes-page-content {
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 1000px; 
+    margin: 20px auto; 
+}
+
+.reportes-page-content h2 {
+    color: #5d4037; 
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.reportes-cards-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px; 
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.report-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    flex: 1; 
+    min-width: 280px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
+    transition: transform 0.3s ease; 
+}
+
+.report-card:hover {
+    transform: translateY(-5px); 
+}
+
+.report-card h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.report-card p {
+    font-size: 2.2em; 
+    font-weight: bold;
+    color: #444;
+}
+
+.report-card.green {
+    background-color: #e8f5e9; 
+    border-left: 8px solid #4CAF50; 
+}
+.report-card.blue {
+    background-color: #e3f2fd; 
+    border-left: 8px solid #2196F3;
+}
+.report-card.yellow {
+    background-color: #fffde7; 
+    border-left: 8px solid #FFC107; 
+}
+
+.historial-ventas-section {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.historial-ventas-section h3 {
+    color: #5d4037;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+.ventas-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.ventas-table th, .ventas-table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.ventas-table th {
+    background-color: #f2f2f2;
+    color: #5d4037;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.ventas-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.ventas-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .reportes-cards-container {
+        flex-direction: column; 
+        align-items: center;
+    }
+    .report-card {
+        min-width: 90%; 
+    }
+}
