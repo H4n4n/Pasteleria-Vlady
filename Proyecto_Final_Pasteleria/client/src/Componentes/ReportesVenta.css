@@ -1,81 +1,34 @@
-.reportes-page-content {
+/*ReportesVenta.css*/
+.deleted-records-section {
+    margin-top: 40px;
+    background-color: #fff;
     padding: 20px;
-    background-color: #f8f8f8;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    max-width: 1000px; 
-    margin: 20px auto; 
-}
-
-.reportes-page-content h2 {
-    color: #5d4037; 
-    margin-bottom: 25px;
-    text-align: center;
-    font-size: 2em;
-}
-
-.reportes-cards-container {
-    display: flex;
-    justify-content: space-around;
-    gap: 20px; 
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-.report-card {
-    background-color: #ffffff;
     border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    flex: 1; 
-    min-width: 280px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
-    transition: transform 0.3s ease; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.report-card:hover {
-    transform: translateY(-5px); 
-}
-
-.report-card h3 {
+.deleted-records-section h3 {
     color: #333;
-    margin-bottom: 15px;
-    font-size: 1.5em;
-}
-
-.report-card p {
-    font-size: 2.2em; 
-    font-weight: bold;
-    color: #444;
-}
-
-.report-card.green {
-    background-color: #e8f5e9; 
-    border-left: 8px solid #4CAF50; 
-}
-.report-card.blue {
-    background-color: #e3f2fd; 
-    border-left: 8px solid #2196F3;
-}
-.report-card.yellow {
-    background-color: #fffde7; 
-    border-left: 8px solid #FFC107; 
-}
-
-.historial-ventas-section {
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.historial-ventas-section h3 {
-    color: #5d4037;
     margin-bottom: 20px;
-    font-size: 1.8em;
-    text-align: center;
 }
 
+.toggle-deleted-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-deleted-button:hover {
+    background-color: #0056b3; 
+}
+
+/* Reutilizando estilos de tabla*/
 .ventas-table {
     width: 100%;
     border-collapse: collapse;
@@ -84,37 +37,268 @@
 
 .ventas-table th, .ventas-table td {
     border: 1px solid #ddd;
-    padding: 12px 15px;
+    padding: 8px;
     text-align: left;
 }
 
 .ventas-table th {
     background-color: #f2f2f2;
-    color: #5d4037;
+    color: #555;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
-.ventas-table tr:nth-child(even) {
+.ventas-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.ventas-table tr:hover {
+.ventas-table tbody tr:hover {
     background-color: #f1f1f1;
 }
 
-.error-message {
-    color: red;
-    text-align: center;
-    font-weight: bold;
+/* Estilos para los cards de reportes */
+.reportes-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
-@media (max-width: 768px) {
-    .reportes-cards-container {
-        flex-direction: column; 
-        align-items: center;
+.report-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    border-left: 5px solid; 
+}
+
+.report-card h3 {
+    margin-top: 0;
+    color: #555;
+    font-size: 1.1em;
+}
+
+.report-card p {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0 0;
+}
+
+/* Colores para las tarjetas */
+.report-card.green { border-color: #28a745; }
+.report-card.green p { color: #28a745; }
+.report-card.blue { border-color: #007bff; }
+.report-card.blue p { color: #007bff; }
+.report-card.yellow { border-color: #ffc107; }
+.report-card.yellow p { color: #ffc107; }
+.report-card.purple { border-color: #6f42c1; }
+.report-card.purple p { color: #6f42c1; }
+.report-card.orange { border-color: #fd7e14; }
+.report-card.orange p { color: #fd7e14; }
+.report-card.gray { border-color: #6c757d; }
+.report-card.gray p { color: #6c757d; }
+
+.chart-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.chart-container {
+    height: 400px;
+    width: 100%;
+}
+
+.indicadores-extra {
+    margin-top: 2rem;
+}
+.indicadores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+.indicador-box {
+    background-color: #fff;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.indicador-box strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.filters-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: 20px; /* Espacio entre los grupos de filtros */
+    align-items: flex-end; /* Alinea los elementos al final (útil para botones) */
+}
+
+.filters-section h3 {
+    width: 100%; /* Ocupa todo el ancho para el título */
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Permite que los grupos crezcan para ocupar espacio */
+    min-width: 180px; /* Ancho mínimo para cada grupo de filtro */
+}
+
+.filter-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.filter-group input[type="date"],
+.filter-group input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%; /* Ocupa todo el ancho de su contenedor */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho */
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 10px; /* Espacio superior para separar de los inputs */
+    width: 100%; /* Ocupa todo el ancho si los inputs se han envuelto */
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+}
+
+/* Opcional: si quieres que los botones se alineen verticalmente con los inputs si hay espacio */
+@media (min-width: 768px) {
+    .filter-buttons {
+        width: auto; /* Permite que los botones no ocupen todo el ancho si hay espacio */
+        margin-top: 0;
+        align-self: flex-end; /* Alinea los botones al final de su fila */
     }
-    .report-card {
-        min-width: 90%; 
-    }
+}
+
+
+.apply-filter-button,
+.clear-filter-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.apply-filter-button {
+    background-color: #28a745; /* Verde */
+    color: white;
+}
+
+.apply-filter-button:hover {
+    background-color: #218838;
+}
+
+.clear-filter-button {
+    background-color: #dc3545; /* Rojo */
+    color: white;
+}
+
+.clear-filter-button:hover {
+    background-color: #c82333;
+}
+
+/* ReportesVenta.css */
+
+/* ... (tus estilos existentes, incluyendo .reportes-cards-container, .report-card, etc.) ... */
+
+.additional-indicators-section {
+    margin-top: 30px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.additional-indicators-section h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+/* Colores para las nuevas cards (ejemplos, puedes ajustarlos) */
+.report-card.light-green {
+    border-left: 5px solid #8bc34a; /* Verde claro */
+}
+
+.report-card.light-blue {
+    border-left: 5px solid #03a9f4; /* Azul claro */
+}
+
+.report-card.light-purple {
+    border-left: 5px solid #9c27b0; /* Morado claro */
+}
+
+.report-card.light-gray {
+    border-left: 5px solid #9e9e9e; /* Gris claro */
+}
+
+.report-card.light-orange { /* Si decides añadir el tiempo de atención */
+    border-left: 5px solid #ff9800; /* Naranja claro */
+}
+
+/* Puedes reutilizar los estilos de .report-card para estas nuevas cards */
+/* Asegúrate de que .report-card tenga un padding, margen, sombra, etc. */
+
+/* Ejemplo si no los tienes: */
+.report-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 180px; /* Asegura un tamaño mínimo */
+    flex: 1; /* Permite que las tarjetas se estiren en el contenedor */
+}
+
+.report-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #444;
+}
+
+.report-card p {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin: 0;
+    color: #222;
+}
+
+/* Ajustes para el contenedor de las cards si no los tienes */
+.reportes-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Espacio entre las cards */
+    margin-bottom: 30px;
 }

@@ -1,4 +1,3 @@
-// client/src/App.jsx
 import React, { useState } from 'react';
 import Dashboard from './Componentes/Dashboard';
 import './App.css'; 
@@ -23,7 +22,6 @@ function App() {
     setErrorMessage('');
 
     try {
-      // *** CAMBIO AQUÍ: USAR URL COMPLETA ***
       const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
@@ -56,7 +54,6 @@ function App() {
     }
 
     try {
-      // *** CAMBIO AQUÍ: USAR URL COMPLETA ***
       const response = await fetch('http://localhost:3000/register', {
         method: 'POST',
         headers: {

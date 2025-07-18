@@ -97,20 +97,26 @@ body {
 }
 
 .dashboard-container {
-    display: flex;
-    min-height: 100vh;
-    width: 100%;
-    max-width: 90%;
-    margin: 0 auto;
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
+    /* Dimensiones fijas */
+    width: 1000px; /* Ancho fijo */
+    height: auto; /* Alto fijo */
+    margin-left: 300px;
+    /* Configuración adicional (si aplica) */
+    background-color: #f0f0f0; /* Ejemplo de color de fondo */
+    overflow-y: auto; 
 }
 
 .sidebar {
+    /* Posicionamiento fijo */
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    /* Configuración de tamaño y diseño */
     width: 250px;
+    /* Aseguramos que la altura ocupe toda la ventana del navegador */
+    height: 680px; 
+    
     background-color: var(--color-claro);
     padding: 1.5rem;
     box-shadow: 0 4px 12px rgba(122, 100, 93, 0.2);
@@ -119,7 +125,8 @@ body {
     justify-content: space-between;
     align-items: center;
     border-right: 1px solid var(--color-acento);
-    border-radius: 0.75rem;
+    /* Se elimina border-radius para evitar esquinas redondeadas si se pega al borde */
+    /* border-radius: 0.75rem; */
 }
 
 .sidebar-header {
