@@ -13,7 +13,6 @@ function ReportesVenta() {
     useEffect(() => {
         const fetchReportes = async () => {
             try {
-                // Obtener totales
                 const totalesResponse = await fetch('http://localhost:3000/api/reportes-totales');
                 if (!totalesResponse.ok) {
                     throw new Error(`HTTP error! status: ${totalesResponse.status}`);
