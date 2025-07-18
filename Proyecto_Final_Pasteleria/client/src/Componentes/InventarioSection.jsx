@@ -10,6 +10,7 @@ function ControlInventario() {
         descripcion: '',
         precio: '',
         stock: '',
+        imagen_url: '',
     });
     const [editandoProducto, setEditandoProducto] = useState(null);
 
@@ -76,7 +77,7 @@ function ControlInventario() {
             }
 
             alert(editandoProducto ? 'Producto actualizado exitosamente!' : 'Producto añadido exitosamente!');
-            setNuevoProducto({ nombre: '', descripcion: '', precio: '', stock: '' });
+            setNuevoProducto({ nombre: '', descripcion: '', precio: '', stock: '', imagen_url: '' });
             setEditandoProducto(null); 
             fetchProductos();
         } catch (err) {
@@ -92,45 +93,13 @@ function ControlInventario() {
             descripcion: product.descripcion,
             precio: product.precio,
             stock: product.stock_actual,
+            imagen_url: product.imagen_url || '',
         });
     };
 
-    const handleDeleteProduct = async (id_prod) => {
-        if (window.confirm('¿Estás seguro de que deseas eliminar este producto? (Se marcará como inactivo)')) {
-            const usuarioLogeado = JSON.parse(localStorage.getItem('user'));
-            if (!usuarioLogeado || !usuarioLogeado.id) {
-                alert('Error: No se pudo identificar al usuario. Por favor, inicia sesión de nuevo.');
-                return;
-            }
-
-            const razon = prompt('Por favor, indica una razón para la eliminación (opcional):');
-
-            try {
-                const response = await fetch(`http://localhost:3000/api/productos/${id_prod}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        usuario_id: usuarioLogeado.id,
-                        razon_eliminacion: razon,
-                    }),
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Error al eliminar el producto.');
-                }
-
-                alert('Producto eliminado lógicamente y registrado con éxito.');
-                fetchProductos(); 
-            } catch (error) {
-                console.error('Error al eliminar producto:', error);
-                alert(`Error al eliminar el producto: ${error.message}`);
-            }
-        }
+    const getImageUrl = (filename) => {
+        return filename ? `/images/${filename}` : '/placeholder.png';
     };
-
 
     if (loading) {
         return <div className="inventario-container">Cargando productos...</div>;
@@ -191,6 +160,28 @@ function ControlInventario() {
                         required
                     />
                 </div>
+                <div className="form-group">
+                    <label htmlFor="imagen_url">Nombre de archivo de Imagen (ej. camiseta.jpg):</label>
+                    <input
+                        type="text"
+                        id="imagen_url"
+                        name="imagen_url"
+                        value={editandoProducto ? editandoProducto.imagen_url : nuevoProducto.imagen_url}
+                        onChange={handleChange}
+                        placeholder="ej. mi_producto.png"
+                    />
+                    {editandoProducto && editandoProducto.imagen_url && (
+                        <p className="current-image-preview">
+                            Imagen actual:
+                            <img
+                                src={getImageUrl(editandoProducto.imagen_url)}
+                                alt="Vista previa"
+                                className="product-thumbnail-preview"
+                            />
+                            <span>{editandoProducto.imagen_url}</span>
+                        </p>
+                    )}
+                </div>
                 <br />
                 <button type="submit">{editandoProducto ? 'Actualizar Producto' : 'Añadir Producto'}</button>
                 {editandoProducto && (
@@ -207,6 +198,7 @@ function ControlInventario() {
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Precio (S/)</th>
@@ -218,6 +210,14 @@ function ControlInventario() {
                             {productos.map((product) => (
                                 <tr key={product.id_prod}>
                                     <td>{product.id_prod}</td>
+                                    <td>
+                                        <img
+                                            src={getImageUrl(product.imagen_url)}
+                                            alt={product.nombre}
+                                            className="product-thumbnail"
+                                            onError={(e) => { e.target.onerror = null; e.target.src = '/placeholder.png'; }}
+                                        />
+                                    </td>
                                     <td>{product.nombre}</td>
                                     <td>{product.descripcion}</td>
                                     <td>{parseFloat(product.precio).toFixed(2)}</td>
@@ -225,9 +225,6 @@ function ControlInventario() {
                                     <td>
                                         <button onClick={() => handleEditClick(product)} className="edit-button">
                                             Editar
-                                        </button>
-                                        <button onClick={() => handleDeleteProduct(product.id_prod)} className="delete-button">
-                                            Eliminar
                                         </button>
                                     </td>
                                 </tr>

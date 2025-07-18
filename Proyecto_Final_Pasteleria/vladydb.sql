@@ -62,6 +62,7 @@ CREATE TABLE `detalle_venta` (
 
 CREATE TABLE `producto` (
   `id_prod` INT(11) NOT NULL AUTO_INCREMENT,
+  `imagen_url` VARCHAR(255) DEFAULT NULL,
   `nombre` VARCHAR(255) NOT NULL,
   `descripcion` TEXT DEFAULT NULL,
   `precio` DECIMAL(10,2) NOT NULL,
@@ -114,6 +115,7 @@ ALTER TABLE producto ADD COLUMN estado ENUM('activo', 'inactivo') DEFAULT 'activ
 -- Opcional: Crear una tabla de log para registros eliminados (auditoría)
 CREATE TABLE productos_eliminados_log (
     id_log INT AUTO_INCREMENT PRIMARY KEY,
+	imagen_url_original VARCHAR(255) DEFAULT NULL,
     id_prod_original INT,
     nombre_original VARCHAR(255),
     descripcion_original TEXT,

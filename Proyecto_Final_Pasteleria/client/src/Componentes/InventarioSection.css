@@ -1,8 +1,7 @@
-/* Contenedor principal de la página de inventario */
 .inventario-page-content {
     padding: 30px;
-    max-width: 1200px; /* Ancho máximo para el contenido */
-    margin: 20px auto; /* Centrar el contenido y dar margen arriba/abajo */
+    max-width: 1200px;
+    margin: 20px auto;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -17,13 +16,12 @@
     padding-bottom: 15px;
 }
 
-/* Estilos para el formulario de añadir/editar producto */
 .product-form {
     background-color: #f8f8f8;
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    margin-bottom: 40px; /* Espacio entre el formulario y la tabla */
+    margin-bottom: 40px;
 }
 
 .product-form h3 {
@@ -48,22 +46,22 @@
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group textarea {
-    width: calc(100% - 22px); /* Ancho completo menos padding y borde */
+    width: calc(100% - 22px);
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
-    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+    box-sizing: border-box;
 }
 
 .form-group textarea {
-    resize: vertical; /* Permite redimensionar verticalmente */
+    resize: vertical;
     min-height: 80px;
 }
 
 .product-form button[type="submit"],
 .product-form .cancel-button {
-    background-color: #28a745; /* Verde para Añadir/Actualizar */
+    background-color: #28a745;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -79,14 +77,13 @@
 }
 
 .product-form .cancel-button {
-    background-color: #6c757d; /* Gris para Cancelar */
+    background-color: #6c757d;
 }
 
 .product-form .cancel-button:hover {
     background-color: #5a6268;
 }
 
-/* Sección de la lista de productos */
 .product-list-section {
     margin-top: 30px;
 }
@@ -98,15 +95,14 @@
     text-align: center;
 }
 
-/* Estilos de la tabla de productos */
 .products-table {
     width: 100%;
-    border-collapse: collapse; /* Elimina el espacio entre celdas */
+    border-collapse: collapse;
     margin-top: 20px;
     background-color: #fff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px; /* Bordes redondeados para la tabla */
-    overflow: hidden; /* Asegura que los bordes redondeados se vean bien */
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .products-table th,
@@ -114,11 +110,11 @@
     border: 1px solid #e0e0e0;
     padding: 12px 15px;
     text-align: left;
-    vertical-align: middle; /* Alineación vertical de contenido en celdas */
+    vertical-align: middle;
 }
 
 .products-table th {
-    background-color: #eef7ff; /* Un azul muy claro */
+    background-color: #eef7ff;
     font-weight: bold;
     color: #333;
     text-transform: uppercase;
@@ -126,30 +122,29 @@
 }
 
 .products-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* Color de fondo para filas pares */
+    background-color: #f9f9f9;
 }
 
 .products-table tbody tr:hover {
-    background-color: #f0f8ff; /* Color de fondo al pasar el ratón */
+    background-color: #f0f8ff;
     cursor: pointer;
 }
 
-/* Estilos para los botones dentro de la tabla */
 .products-table td button {
     padding: 8px 12px;
-    margin: 3px; /* Espacio entre los botones */
+    margin: 3px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.8em; /* Un poco más pequeños para caber mejor */
+    font-size: 0.8em;
     font-weight: bold;
     transition: background-color 0.2s ease, transform 0.2s ease;
-    display: block; /* Para que cada botón ocupe su propia línea y se apilen */
-    width: calc(100% - 6px); /* Para que ocupen el ancho disponible en la celda con margen */
+    display: block;
+    width: calc(100% - 6px);
 }
 
 .products-table td button.edit-button {
-    background-color: #007bff; /* Azul */
+    background-color: #007bff;
     color: white;
 }
 
@@ -159,7 +154,7 @@
 }
 
 .products-table td button.delete-button {
-    background-color: #dc3545; /* Rojo */
+    background-color: #dc3545;
     color: white;
 }
 
@@ -168,7 +163,6 @@
     transform: translateY(-1px);
 }
 
-/* Mensajes de carga y error */
 .inventario-container.error-message,
 .inventario-container.loading-message {
     text-align: center;
@@ -189,4 +183,29 @@
     background-color: #d1ecf1;
     color: #0c5460;
     border: 1px solid #bee5eb;
+}
+
+.product-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+.current-image-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.product-thumbnail-preview {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid #ddd;
 }
